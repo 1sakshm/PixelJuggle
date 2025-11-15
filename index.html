@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pixel Rearrangement Animation</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Pixel Rearrangement Animation</h1>
+        <p class="description">Draw or upload images and watch pixels rearrange in real-time</p>
+        <div class="mode-selector">
+            <button class="mode-btn active" id="uploadModeBtn">Upload Mode</button>
+            <button class="mode-btn" id="drawModeBtn">Draw Mode</button>
+        </div>
+
+        <div id="uploadMode" class="mode-section active">
+            <div class="upload-section">
+                <div class="upload-box">
+                    <h3>Image A (Source)</h3>
+                    <input type="file" id="imageA" accept="image/*">
+                    <label for="imageA" class="upload-label">Choose Image A</label>
+                    <div class="preview-container">
+                        <canvas id="previewA" class="preview-canvas"></canvas>
+                    </div>
+                </div>
+
+                <div class="upload-box">
+                    <h3>Image B (Target)</h3>
+                    <input type="file" id="imageB" accept="image/*">
+                    <label for="imageB" class="upload-label">Choose Image B</label>
+                    <div class="preview-container">
+                        <canvas id="previewB" class="preview-canvas"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="controls">
+                <button id="startBtn" disabled>Start Animation</button>
+                <button id="resetBtn">Reset</button>
+            </div>
+        </div>
+
+        <div id="drawMode" class="mode-section">
+            <div class="draw-section">
+                <div class="canvas-container">
+                    <h3>Draw Here (Source)</h3>
+                    <div class="drawing-tools">
+                        <label>Brush Size:</label>
+                        <input type="range" id="brushSize" min="1" max="20" value="3">
+                        <span id="brushSizeValue">3px</span>
+                        <label style="margin-left: 20px;">Color:</label>
+                        <input type="color" id="brushColor" value="#000000">
+                        <button id="clearDrawBtn" class="tool-btn">Clear</button>
+                    </div>
+                    <canvas id="drawCanvas" class="draw-canvas"></canvas>
+                </div>
+
+                <div class="canvas-container">
+                    <h3>Target Image</h3>
+                    <input type="file" id="targetImage" accept="image/*">
+                    <label for="targetImage" class="upload-label">Choose Target</label>
+                    <div class="preview-container">
+                        <canvas id="targetPreview" class="preview-canvas"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="controls">
+                <button id="startRealtimeBtn" disabled>Start Real-Time Animation</button>
+                <button id="stopRealtimeBtn" disabled>Stop Animation</button>
+                <button id="resetDrawBtn">Reset</button>
+            </div>
+        </div>
+
+        <div class="animation-container">
+            <canvas id="animationCanvas"></canvas>
+        </div>
+
+        <div class="info">
+            <p id="status">Select a mode to begin</p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
