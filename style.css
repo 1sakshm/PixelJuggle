@@ -1,493 +1,183 @@
-/* style.css — Landscape modes layout, clean & horizontal, Option B palette
-   No JS changes. All original IDs preserved.
-*/
-
-/* Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Space+Grotesk:wght@400;600&display=swap');
 
-:root {
-  --bg-1: #05050a;
-  --panel: rgba(18,18,28,0.96);
-  --glass-border: rgba(255,255,255,0.06);
-  --muted: rgba(220,225,240,0.64);
-
-  /* Option B palette */
-  --blue-deep: #1E40FF;
-  --violet: #4F46E5;
-  --light-violet: #6F6FFF;
-  --accent-soft: rgba(111,111,255,0.12);
-
-  --radius-md: 14px;
-  --radius-sm: 10px;
-
-  --shadow-sm: 0 6px 18px rgba(0,0,0,0.6);
-  --shadow-md: 0 12px 36px rgba(2,6,18,0.7);
-  --shadow-lg: 0 26px 72px rgba(2,6,18,0.85);
-
-  --t-fast: 0.14s ease;
-  --t-med: 0.22s cubic-bezier(.2,.9,.3,1);
-
-  --max-width: 1180px;
+:root{
+  --bg-1:#05050a;--panel:rgba(18,18,28,0.96);--glass-border:rgba(255,255,255,0.06);
+  --muted:rgba(220,225,240,0.64);--blue-deep:#1E40FF;--violet:#4F46E5;--light-violet:#6F6FFF;
+  --accent-soft:rgba(111,111,255,0.12);--radius-md:14px;--radius-sm:10px;
+  --shadow-sm:0 6px 18px rgba(0,0,0,0.6);--shadow-md:0 12px 36px rgba(2,6,18,0.7);
+  --shadow-lg:0 26px 72px rgba(2,6,18,0.85);--t-fast:0.14s ease;--t-med:0.22s cubic-bezier(.2,.9,.3,1);
+  --max-width:1180px;
 }
 
-/* Reset */
-* { box-sizing: border-box; }
-html, body { height: 100%; }
-body {
-  margin: 0;
-  font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Arial;
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;font-family:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,Arial;
   background:
     radial-gradient(900px 480px at 10% 0%, rgba(79,70,229,0.12), transparent 55%),
     radial-gradient(900px 560px at 90% 100%, rgba(30,64,255,0.08), transparent 55%),
-    linear-gradient(180deg, var(--bg-1), #070714);
-  color: #eef6ff;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  padding: 22px;
+    linear-gradient(180deg,var(--bg-1),#070714);
+  color:#eef6ff;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;padding:22px;
 }
 
-/* Page */
-.page {
-  max-width: var(--max-width);
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
+.page{max-width:var(--max-width);margin:0 auto;display:flex;flex-direction:column;gap:18px}
+
+.site-header{display:flex;align-items:center;justify-content:space-between;gap:14px}
+.brand{display:flex;align-items:center;gap:12px}
+.logo-mark{
+  width:46px;height:46px;border-radius:12px;display:grid;place-items:center;
+  background:radial-gradient(circle at 0 0, rgba(79,70,229,0.18), transparent 40%),
+             radial-gradient(circle at 100% 100%, rgba(30,64,255,0.12), transparent 40%),
+             linear-gradient(145deg,#0a0a12,#04040a);
+  border:1px solid rgba(255,255,255,0.08);box-shadow:0 10px 28px rgba(0,0,0,0.9);
+  transition:transform var(--t-med),box-shadow var(--t-med)
+}
+.logo-mark:hover{transform:translateY(-2px) scale(1.02);box-shadow:0 16px 36px rgba(0,0,0,0.95)}
+.brand-text h1{font-family:'Space Grotesk',Inter,sans-serif;margin:0;font-size:18px}
+.tagline{margin:2px 0 0;color:var(--muted);font-size:13px}
+
+.top-controls{display:flex;gap:10px}
+.mode-toggle{
+  padding:8px 14px;border-radius:999px;background:rgba(8,10,16,0.78);
+  border:1px solid rgba(255,255,255,0.06);color:var(--muted);font-weight:700;font-size:12px;cursor:pointer;
+  transition:transform var(--t-fast),box-shadow var(--t-fast),background var(--t-fast)
+}
+.mode-toggle.active{
+  background:linear-gradient(120deg,var(--blue-deep),var(--violet));color:#04111b;
+  box-shadow:0 10px 28px rgba(30,64,255,0.16)
 }
 
-/* Header */
-.site-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 14px;
-}
-.brand { display: flex; align-items: center; gap: 12px; }
-.logo-mark {
-  width: 46px; height: 46px; border-radius: 12px;
-  display: grid; place-items: center;
-  background: radial-gradient(circle at 0 0, rgba(79,70,229,0.18), transparent 40%),
-              radial-gradient(circle at 100% 100%, rgba(30,64,255,0.12), transparent 40%),
-              linear-gradient(145deg, #0a0a12, #04040a);
-  border: 1px solid rgba(255,255,255,0.08);
-  box-shadow: 0 10px 28px rgba(0,0,0,0.9);
-  transition: transform var(--t-med), box-shadow var(--t-med);
-}
-.logo-mark:hover { transform: translateY(-2px) scale(1.02); box-shadow: 0 16px 36px rgba(0,0,0,0.95); }
+.stage-and-modes{display:grid;grid-template-columns:1fr 780px;gap:18px;align-items:start}
 
-.brand-text h1 { font-family: 'Space Grotesk', Inter, sans-serif; margin: 0; font-size: 18px; }
-.tagline { margin: 2px 0 0; color: var(--muted); font-size: 13px; }
+.card-panel{
+  background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.005)),var(--panel);
+  border-radius:var(--radius-md);padding:16px;border:1px solid var(--glass-border);box-shadow:var(--shadow-md);
+  transition:transform var(--t-med),box-shadow var(--t-med)
+}
+.card-panel:hover{transform:translateY(-3px);box-shadow:var(--shadow-lg)}
 
-/* Mode toggles */
-.top-controls { display: flex; gap: 10px; }
-.mode-toggle {
-  padding: 8px 14px; border-radius: 999px;
-  background: rgba(8,10,16,0.78);
-  border: 1px solid rgba(255,255,255,0.06);
-  color: var(--muted); font-weight: 700; font-size: 12px; cursor: pointer;
-  transition: transform var(--t-fast), box-shadow var(--t-fast), background var(--t-fast);
+.stage{display:flex;flex-direction:column;gap:10px;align-items:center}
+.stage-frame{
+  position:relative;width:100%;max-width:640px;display:flex;justify-content:center;padding:12px;border-radius:18px;
+  background:linear-gradient(135deg, rgba(5,8,14,0.96), rgba(10,12,20,0.98));border:1px solid rgba(255,255,255,0.03);overflow:hidden
 }
-.mode-toggle.active {
-  background: linear-gradient(120deg, var(--blue-deep), var(--violet));
-  color: #04111b;
-  box-shadow: 0 10px 28px rgba(30,64,255,0.16);
-}
+.frame-accent{position:absolute;inset:0;pointer-events:none;background:linear-gradient(120deg,var(--accent-soft), rgba(111,111,255,0.06));filter:blur(8px);opacity:0.95}
+.stage-frame-inner{padding:3px;border-radius:14px;background:linear-gradient(180deg,var(--blue-deep),var(--violet));box-shadow:0 8px 20px rgba(2,8,20,0.6);transition:transform var(--t-fast)}
+.stage:hover .stage-frame-inner{transform:translateY(-1px) scale(1.01)}
 
-/* Main layout: stage + modes row (landscape) */
-.stage-and-modes {
-  display: grid;
-  grid-template-columns: 1fr 780px; /* stage left, wide modes area right */
-  gap: 18px;
-  align-items: start;
-}
+#animationCanvas{display:block;width:240px;height:240px;border-radius:12px;background:#030306;box-shadow:0 10px 30px rgba(2,6,16,0.8)}
 
-/* Card panel */
-.card-panel {
-  background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.005)), var(--panel);
-  border-radius: var(--radius-md);
-  padding: 16px;
-  border: 1px solid var(--glass-border);
-  box-shadow: var(--shadow-md);
-  transition: transform var(--t-med), box-shadow var(--t-med);
-}
-.card-panel:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); }
+.stage-footer{width:100%;display:flex;justify-content:space-between;align-items:center;gap:12px}
+.status-pill{flex:1;display:flex;gap:8px;align-items:center;padding:8px 12px;border-radius:999px;background:linear-gradient(90deg, rgba(11,14,20,0.96), rgba(6,8,12,0.96));border:1px solid rgba(255,255,255,0.04);color:var(--muted);font-weight:600}
+.status-pill svg{color:var(--blue-deep)}
+#status{color:#f4f7ff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 
-/* Stage */
-.stage { display: flex; flex-direction: column; gap: 10px; align-items: center; }
-.stage-frame {
-  position: relative;
-  width: 100%;
-  max-width: 640px;
-  display: flex;
-  justify-content: center;
-  padding: 12px;
-  border-radius: 18px;
-  background: linear-gradient(135deg, rgba(5,8,14,0.96), rgba(10,12,20,0.98));
-  border: 1px solid rgba(255,255,255,0.03);
-  overflow: hidden;
-}
-.frame-accent {
-  position: absolute; inset: 0; pointer-events: none;
-  background: linear-gradient(120deg, var(--accent-soft), rgba(111,111,255,0.06));
-  filter: blur(8px); opacity: 0.95;
-}
-.stage-frame-inner {
-  padding: 3px; border-radius: 14px;
-  background: linear-gradient(180deg, var(--blue-deep), var(--violet));
-  box-shadow: 0 8px 20px rgba(2,8,20,0.6);
-  transition: transform var(--t-fast);
-}
-.stage:hover .stage-frame-inner { transform: translateY(-1px) scale(1.01); }
+.stage-actions{display:flex;gap:8px}
+.btn{border:0;border-radius:999px;padding:8px 12px;font-size:13px;font-weight:700;cursor:pointer}
+.btn.primary{background:linear-gradient(120deg,var(--blue-deep),var(--violet));color:#04111b;box-shadow:0 12px 28px rgba(30,64,255,0.12)}
+.btn.primary:disabled{opacity:0.45;cursor:default;box-shadow:none}
+.btn.ghost{background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--muted)}
+.btn.outline{background:transparent;border:1px solid rgba(111,111,255,0.18);color:#dbe6ff}
 
-/* Animation canvas */
-#animationCanvas {
-  display: block;
-  width: 240px;
-  height: 240px;
-  border-radius: 12px;
-  background: #030306;
-  box-shadow: 0 10px 30px rgba(2,6,16,0.8);
-}
+.modes-row{display:flex;flex-direction:column;gap:14px}
+.modes-row .mode-panels{display:flex;gap:14px;align-items:flex-start}
+.modes-row > #uploadMode,.modes-row > #drawMode{flex:1 1 50%;min-width:260px}
 
-/* Stage footer */
-.stage-footer { width: 100%; display: flex; justify-content: space-between; align-items: center; gap: 12px; }
-.status-pill {
-  flex: 1; display: flex; gap: 8px; align-items: center; padding: 8px 12px; border-radius: 999px;
-  background: linear-gradient(90deg, rgba(11,14,20,0.96), rgba(6,8,12,0.96));
-  border: 1px solid rgba(255,255,255,0.04); color: var(--muted); font-weight: 600;
-}
-.status-pill svg { color: var(--blue-deep); }
-#status { color: #f4f7ff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.panel-header{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.panel-title{margin:0;font-size:13px;text-transform:uppercase;letter-spacing:0.16em;color:rgba(245,245,255,0.9)}
+.panel-badge{padding:4px 9px;border-radius:999px;font-size:11px;text-transform:uppercase;letter-spacing:0.12em}
 
-/* Buttons */
-.stage-actions { display: flex; gap: 8px; }
-.btn { border: 0; border-radius: 999px; padding: 8px 12px; font-size: 13px; font-weight: 700; cursor: pointer; }
-.btn.primary {
-  background: linear-gradient(120deg, var(--blue-deep), var(--violet));
-  color: #04111b; box-shadow: 0 12px 28px rgba(30,64,255,0.12);
-}
-.btn.primary:disabled { opacity: 0.45; cursor: default; box-shadow: none; }
-.btn.ghost { background: transparent; border: 1px solid rgba(255,255,255,0.06); color: var(--muted); }
-.btn.outline { background: transparent; border: 1px solid rgba(111,111,255,0.18); color: #dbe6ff; }
+.uploads{display:flex;gap:10px;align-items:center}
+.dropzone{position:relative;flex:1;min-width:140px;padding:10px;border-radius:12px;border:1px dashed rgba(255,255,255,0.04);background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.005)), rgba(6,8,14,0.95);cursor:pointer;transition:transform var(--t-fast),box-shadow var(--t-fast),border-color var(--t-fast)}
+.dropzone.small{max-width:220px}
+.dropzone:hover{transform:translateY(-3px);border-color:rgba(79,70,229,0.18);box-shadow:0 18px 40px rgba(0,0,0,0.85)}
+.dropzone input[type="file"]{display:none}
+.dz-inner{text-align:center;z-index:2}
+.dz-inner strong{display:block;font-weight:700;color:#eaf6ff}
+.dz-hint{font-size:12px;color:var(--muted)}
 
-/* Modes row (right column) — landscape layout of upload + draw panels */
-.modes-row {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
+.preview-wrap{margin-top:8px;display:flex;justify-content:center;align-items:center}
+.preview{width:140px;height:140px;border-radius:10px;background:#020307;border:1px solid rgba(255,255,255,0.04);box-shadow:0 10px 26px rgba(2,6,16,0.8);transition:transform var(--t-med),border-color var(--t-med)}
+.dropzone:hover .preview{transform:translateY(-3px) scale(1.02);border-color:rgba(79,70,229,0.28)}
+
+.draw-area{display:flex;gap:12px;align-items:flex-start}
+.draw-left{flex:1;display:flex;flex-direction:column;gap:10px}
+.draw-right{width:220px;display:flex;flex-direction:column;gap:10px;align-items:stretch}
+
+.draw-tools{display:flex;flex-wrap:wrap;gap:10px;align-items:center;padding:8px;border-radius:999px;background:linear-gradient(90deg, rgba(30,30,40,0.9), rgba(12,14,20,0.95));border:1px solid rgba(111,111,255,0.08)}
+.tool{display:flex;gap:6px;align-items:center}
+.tool-label{font-size:11px;text-transform:uppercase;letter-spacing:0.05em;color:rgba(230,230,255,0.9)}
+.tool-value{color:var(--light-violet);font-weight:800;min-width:44px;text-align:right}
+
+input[type="range"]{-webkit-appearance:none;appearance:none;width:120px;height:6px;border-radius:999px;background:rgba(255,255,255,0.12);outline:none}
+input[type="range"]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;border-radius:50%;background:var(--light-violet);box-shadow:0 4px 12px rgba(79,70,229,0.28);cursor:pointer}
+input[type="color"]{width:44px;height:36px;border-radius:8px;padding:0;border:2px solid rgba(255,255,255,0.06);cursor:pointer;transition:transform var(--t-fast),box-shadow var(--t-fast)}
+
+.swatches{display:flex;gap:8px;align-items:center}
+.swatch{width:28px;height:28px;border-radius:6px;border:2px solid rgba(255,255,255,0.06);cursor:pointer;box-shadow:0 8px 18px rgba(0,0,0,0.6);transition:transform var(--t-fast),box-shadow var(--t-fast),outline var(--t-fast);padding:0;background:#fff}
+.swatch:hover{transform:translateY(-3px);box-shadow:0 12px 28px rgba(0,0,0,0.85)}
+.swatch--active{outline:3px solid rgba(79,70,229,0.24);transform:scale(1.06)}
+
+.canvas-draw-wrap{border-radius:16px;overflow:hidden;border:1px solid rgba(111,111,255,0.12);background:radial-gradient(circle at 0 0, rgba(79,70,229,0.12), transparent 60%), rgba(5,5,12,0.98);box-shadow:0 18px 48px rgba(0,0,0,0.95);padding:8px}
+.draw-canvas{display:block;width:100%;height:360px;background:linear-gradient(180deg,#0b0b0d,#050508);border-radius:10px;box-shadow:inset 0 6px 12px rgba(0,0,0,0.6);cursor:crosshair}
+
+.tool-btn{border:0;border-radius:999px;padding:6px 12px;font-size:11px;background:rgba(255,255,255,0.04);color:#f6f2ff;cursor:pointer;transition:transform var(--t-fast),box-shadow var(--t-fast)}
+.tool-btn:hover{transform:translateY(-1px);box-shadow:0 10px 24px rgba(0,0,0,0.8)}
+
+.realtime-controls{display:flex;flex-direction:column;gap:8px}
+.mini-note{padding:10px}
+.note-row{display:flex;align-items:flex-start;gap:10px}
+.dot{width:8px;height:8px;border-radius:999px;background:var(--light-violet);box-shadow:0 0 12px rgba(111,111,255,0.8)}
+.muted{color:var(--muted);font-size:12px}
+.site-footer{text-align:center;margin-top:2px;font-size:12px;color:var(--muted)}
+
+.mode-toggle:focus,.btn:focus,.swatch:focus,.dropzone:focus,input[type="color"]:focus{outline:3px solid rgba(79,70,229,0.18);outline-offset:3px}
+
+@media (max-width:1080px){
+  .stage-and-modes{grid-template-columns:1fr}
+  .modes-row{display:flex;flex-direction:column;gap:14px}
+  .modes-row > #uploadMode,.modes-row > #drawMode{width:100%}
+  #animationCanvas{width:220px;height:220px}
+  .draw-canvas{height:320px}
 }
 
-/* Inside modes area we have a horizontal panels row for landscape effect */
-.modes-row .mode-panels {
-  display: flex;
-  gap: 14px;
-  align-items: flex-start;
+@media (max-width:640px){
+  .page{padding:14px}
+  .logo-mark{width:40px;height:40px}
+  .preview{width:140px;height:140px}
+  .draw-canvas{height:260px}
 }
 
-/* When rendering, the #uploadMode and #drawMode elements are direct children of .modes-row.
-   To make them sit side-by-side, apply a small helper container via CSS grid/flex:
-   treat .modes-row as container and its direct children as panels in a row. */
-.modes-row > #uploadMode,
-.modes-row > #drawMode {
-  flex: 1 1 50%;
-  min-width: 260px;
+#previewA,#previewB,#targetPreview,#animationCanvas,#drawCanvas{border-radius:10px}
+
+.modes-row > #uploadMode,.modes-row > #drawMode{display:none;flex-direction:column;gap:12px}
+.modes-row > #uploadMode.active,.modes-row > #drawMode.active{display:flex}
+
+#drawMode .preview-wrap,#drawMode .preview{display:none !important}
+#drawMode .dropzone.small{padding:10px;min-height:48px;display:flex;align-items:center;justify-content:center}
+#drawMode .dropzone.small{border-style:solid;border-width:1px;border-color:rgba(255,255,255,0.03);background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.004))}
+
+@media (max-width:1080px){
+  .modes-row > #uploadMode,.modes-row > #drawMode{display:flex !important;width:100%}
+  #drawMode .preview-wrap{display:none !important}
 }
 
-/* Panel content */
-.panel-header { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
-.panel-title { margin: 0; font-size: 13px; text-transform: uppercase; letter-spacing: 0.16em; color: rgba(245,245,255,0.9); }
-.panel-badge { padding: 4px 9px; border-radius: 999px; font-size: 11px; text-transform: uppercase; letter-spacing: 0.12em; }
+#drawMode{max-width:520px}
+#drawMode .draw-area{flex-direction:column}
+#drawCanvas{width:100% !important;max-width:460px !important;height:300px !important}
+#drawMode .draw-right{width:100%;max-width:320px;margin:0 auto}
+#drawMode .draw-tools{flex-wrap:wrap;justify-content:center;max-width:480px;margin:0 auto}
+.modes-row{max-width:100%;overflow:hidden}
+#drawMode.card-panel{padding:12px}
+#drawMode .draw-area{display:flex;flex-direction:row;align-items:flex-start}
+#drawMode .draw-right{display:none !important}
+#drawMode .canvas-draw-wrap{margin-bottom:0 !important}
+#drawMode.card-panel{margin-left:20px;max-width:600px}
+#drawMode .draw-left{width:100%;margin:0 auto}
+#drawCanvas{width:100% !important;max-width:540px !important;height:320px !important}
+#drawMode .canvas-draw-wrap{background:none !important;padding:0 !important;margin:0 !important;border:none !important;box-shadow:none !important}
+#drawCanvas{display:block;margin:0 auto;border-radius:10px !important;box-shadow:0 0 0 1px rgba(255,255,255,0.1) !important}
+#drawMode .draw-left{margin-bottom:0 !important;padding-bottom:0 !important}
+#drawMode .draw-area{margin-bottom:0 !important;padding-bottom:0 !important}
 
-/* Uploads (compact) */
-.uploads { display: flex; gap: 10px; align-items: center; }
-.dropzone {
-  position: relative; flex: 1; min-width: 140px; padding: 10px; border-radius: 12px;
-  border: 1px dashed rgba(255,255,255,0.04);
-  background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.005)), rgba(6,8,14,0.95);
-  cursor: pointer; transition: transform var(--t-fast), box-shadow var(--t-fast), border-color var(--t-fast);
-}
-.dropzone.small { max-width: 220px; }
-.dropzone:hover { transform: translateY(-3px); border-color: rgba(79,70,229,0.18); box-shadow: 0 18px 40px rgba(0,0,0,0.85); }
-.dropzone input[type="file"] { display: none; }
-.dz-inner { text-align: center; z-index: 2; }
-.dz-inner strong { display: block; font-weight: 700; color: #eaf6ff; }
-.dz-hint { font-size: 12px; color: var(--muted); }
-
-/* Previews */
-.preview-wrap { margin-top: 8px; display: flex; justify-content: center; align-items: center; }
-.preview {
-  width: 140px; height: 140px; border-radius: 10px; background: #020307; border: 1px solid rgba(255,255,255,0.04);
-  box-shadow: 0 10px 26px rgba(2,6,16,0.8); transition: transform var(--t-med), border-color var(--t-med);
-}
-.dropzone:hover .preview { transform: translateY(-3px) scale(1.02); border-color: rgba(79,70,229,0.28); }
-
-/* Draw area */
-.draw-area { display: flex; gap: 12px; align-items: flex-start; }
-.draw-left { flex: 1; display: flex; flex-direction: column; gap: 10px; }
-.draw-right { width: 220px; display:flex; flex-direction: column; gap: 10px; align-items: stretch; }
-
-/* Tools */
-.draw-tools {
-  display: flex; flex-wrap: wrap; gap: 10px; align-items: center; padding: 8px;
-  border-radius: 999px; background: linear-gradient(90deg, rgba(30,30,40,0.9), rgba(12,14,20,0.95));
-  border: 1px solid rgba(111,111,255,0.08);
-}
-.tool { display: flex; gap: 6px; align-items: center; }
-.tool-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; color: rgba(230,230,255,0.9); }
-.tool-value { color: var(--light-violet); font-weight: 800; min-width: 44px; text-align: right; }
-
-/* Range + color */
-input[type="range"] {
-  -webkit-appearance: none; appearance: none; width: 120px; height: 6px; border-radius: 999px; background: rgba(255,255,255,0.12); outline: none;
-}
-input[type="range"]::-webkit-slider-thumb {
-  -webkit-appearance: none; width: 16px; height: 16px; border-radius: 50%;
-  background: var(--light-violet); box-shadow: 0 4px 12px rgba(79,70,229,0.28); cursor: pointer;
-}
-input[type="color"] {
-  width: 44px; height: 36px; border-radius: 8px; padding: 0; border: 2px solid rgba(255,255,255,0.06);
-  cursor: pointer; transition: transform var(--t-fast), box-shadow var(--t-fast);
-}
-
-/* Swatches */
-.swatches { display:flex; gap:8px; align-items:center; }
-.swatch {
-  width: 28px; height: 28px; border-radius: 6px; border: 2px solid rgba(255,255,255,0.06);
-  cursor: pointer; box-shadow: 0 8px 18px rgba(0,0,0,0.6);
-  transition: transform var(--t-fast), box-shadow var(--t-fast), outline var(--t-fast);
-  padding: 0; background: #fff;
-}
-.swatch:hover { transform: translateY(-3px); box-shadow: 0 12px 28px rgba(0,0,0,0.85); }
-.swatch--active { outline: 3px solid rgba(79,70,229,0.24); transform: scale(1.06); }
-
-/* Canvas draw-wrap */
-.canvas-draw-wrap {
-  border-radius: 16px; overflow: hidden; border: 1px solid rgba(111,111,255,0.12);
-  background: radial-gradient(circle at 0 0, rgba(79,70,229,0.12), transparent 60%), rgba(5,5,12,0.98);
-  box-shadow: 0 18px 48px rgba(0,0,0,0.95); padding: 8px;
-}
-.draw-canvas {
-  display:block; width:100%; height:360px; background: linear-gradient(180deg, #0b0b0d, #050508);
-  border-radius: 10px; box-shadow: inset 0 6px 12px rgba(0,0,0,0.6); cursor: crosshair;
-}
-
-/* Tool button */
-.tool-btn {
-  border: 0; border-radius: 999px; padding: 6px 12px; font-size: 11px;
-  background: rgba(255,255,255,0.04); color: #f6f2ff; cursor: pointer;
-  transition: transform var(--t-fast), box-shadow var(--t-fast);
-}
-.tool-btn:hover { transform: translateY(-1px); box-shadow: 0 10px 24px rgba(0,0,0,0.8); }
-
-/* Realtime controls */
-.realtime-controls { display:flex; flex-direction: column; gap: 8px; }
-
-/* Mini note */
-.mini-note { padding: 10px; }
-.note-row { display:flex; align-items:flex-start; gap:10px; }
-.dot { width:8px; height:8px; border-radius:999px; background: var(--light-violet); box-shadow:0 0 12px rgba(111,111,255,0.8); }
-.muted { color: var(--muted); font-size: 12px; }
-
-/* Footer */
-.site-footer { text-align:center; margin-top:2px; font-size:12px; color: var(--muted); }
-
-/* Focus */
-.mode-toggle:focus, .btn:focus, .swatch:focus, .dropzone:focus, input[type="color"]:focus {
-  outline: 3px solid rgba(79,70,229,0.18);
-  outline-offset: 3px;
-}
-
-/* Responsive: collapse modes row into vertical stack on narrow screens */
-@media (max-width: 1080px) {
-  .stage-and-modes { grid-template-columns: 1fr; }
-  .modes-row { display: flex; flex-direction: column; gap: 14px; }
-  .modes-row > #uploadMode, .modes-row > #drawMode { width: 100%; }
-  #animationCanvas { width: 220px; height: 220px; }
-  .draw-canvas { height: 320px; }
-}
-
-/* Small screens */
-@media (max-width: 640px) {
-  .page { padding: 14px; }
-  .logo-mark { width: 40px; height: 40px; }
-  .preview { width: 140px; height: 140px; }
-  .draw-canvas { height: 260px; }
-}
-
-/* keep canvases rounded */
-#previewA, #previewB, #targetPreview, #animationCanvas, #drawCanvas { border-radius: 10px; }
-
-/* ---------------------------
-  Fix: show only active mode panel in landscape modes-row
-  and remove small preview box in draw mode (CSS-only)
-  --------------------------- */
-
-/* Ensure mode panels within the modes-row are hidden by default,
-   and only the one with .active is displayed (flex column). */
-.modes-row > #uploadMode,
-.modes-row > #drawMode {
-  display: none;
-  flex-direction: column;
-  gap: 12px;
-}
-
-/* When your script toggles .active on a panel, show that panel */
-.modes-row > #uploadMode.active,
-.modes-row > #drawMode.active {
-  display: flex;
-}
-
-/* Clean up the draw mode: hide the preview canvas box inside draw mode
-   (removes the 'random' small preview box) */
-#drawMode .preview-wrap,
-#drawMode .preview {
-  display: none !important;
-}
-
-/* If you want the target dropzone in draw mode to remain but without the
-   extra preview area, make it compact and inline */
-#drawMode .dropzone.small {
-  padding: 10px;
-  min-height: 48px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-/* optional - remove dashed border for the small dropzone in draw mode
-   to make it visually less boxy */
-#drawMode .dropzone.small {
-  border-style: solid;
-  border-width: 1px;
-  border-color: rgba(255,255,255,0.03);
-  background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.004));
-}
-
-/* tiny responsive tweak: ensure panels still stack on small screens */
-@media (max-width: 1080px) {
-  .modes-row > #uploadMode,
-  .modes-row > #drawMode {
-    display: flex !important;
-    width: 100%;
-  }
-  /* keep draw preview hidden on small screens too */
-  #drawMode .preview-wrap { display: none !important; }
-}
-
-/* --- FIX: Prevent draw panel from overflowing screen --- */
-
-/* Make the draw panel narrower */
-#drawMode {
-  max-width: 520px;   /* reduce from big ~780px panel */
-}
-
-/* Reduce draw area width */
-#drawMode .draw-area {
-  flex-direction: column;
-}
-
-/* Reduce the draw canvas width so it fits the screen */
-#drawCanvas {
-  width: 100% !important;
-  max-width: 460px !important;
-  height: 300px !important; /* maintain aspect but smaller */
-}
-
-/* Keep target panel aligned */
-#drawMode .draw-right {
-  width: 100%;
-  max-width: 320px;
-  margin: 0 auto;
-}
-
-/* Reduce swatches & tools width so they don't stretch */
-#drawMode .draw-tools {
-  flex-wrap: wrap;
-  justify-content: center;
-  max-width: 480px;
-  margin: 0 auto;
-}
-
-/* Fix entire modes-row width so both upload + draw fit horizontally */
-.modes-row {
-  max-width: 100%;
-  overflow: hidden;
-}
-
-/* Tighten inside padding for a cleaner layout */
-#drawMode.card-panel {
-  padding: 12px;
-}
-
-/* --- FIX 1: Remove the bottom empty area in draw panel --- */
-
-#drawMode .draw-area {
-  display: flex;
-  flex-direction: row;   /* Put canvas + tools in one row */
-  align-items: flex-start;
-}
-
-/* Remove unused right section completely */
-#drawMode .draw-right {
-  display: none !important;
-}
-
-/* Make the draw canvas group take full height with no extra bottom padding */
-#drawMode .canvas-draw-wrap {
-  margin-bottom: 0 !important;
-}
-
-/* --- FIX 2: Shift the draw panel slightly to the RIGHT for clean spacing --- */
-
-#drawMode.card-panel {
-  margin-left: 20px;   /* move panel slightly right */
-  max-width: 600px;    /* keep it from stretching too wide */
-}
-
-/* Keep its inside content centered & neat */
-#drawMode .draw-left {
-  width: 100%;
-  margin: 0 auto;
-}
-
-/* Canvas width control so it fits nicely */
-#drawCanvas {
-  width: 100% !important;
-  max-width: 540px !important;
-  height: 320px !important;
-}
-
-/* --- REMOVE the dark bottom region under the DRAW CANVAS --- */
-
-#drawMode .canvas-draw-wrap {
-    background: none !important;
-    padding: 0 !important;
-    margin: 0 !important;
-    border: none !important;
-    box-shadow: none !important;
-}
-
-/* Make the draw canvas sit DIRECTLY inside the panel with no extra space */
-#drawCanvas {
-    display: block;
-    margin: 0 auto;
-    border-radius: 10px !important;
-    box-shadow: 0 0 0 1px rgba(255,255,255,0.1) !important; /* keep clean border */
-}
-
-/* Remove ANY leftover spacing below */
-#drawMode .draw-left {
-    margin-bottom: 0 !important;
-    padding-bottom: 0 !important;
-}
-
-#drawMode .draw-area {
-    margin-bottom: 0 !important;
-    padding-bottom: 0 !important;
-}
-
-/* REMOVE the color boxes (swatches) under brush size */
-#drawMode .swatches,
-#drawMode .swatch {
-    display: none !important;
-}
+#drawMode .swatches,#drawMode .swatch{display:none !important}
