@@ -1,88 +1,171 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pixel Rearrangement Animation</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Pixel Juggle — Draw or upload & watch pixels rearrange</title>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Space+Grotesk:wght@400;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-    <div class="container">
-        <h1>Pixel Rearrangement Animation</h1>
-        <p class="description">Draw or upload images and watch pixels rearrange in real-time</p>
-        <div class="mode-selector">
-            <button class="mode-btn active" id="uploadModeBtn">Upload Mode</button>
-            <button class="mode-btn" id="drawModeBtn">Draw Mode</button>
+  <div class="page">
+    <!-- Header -->
+    <header class="site-header">
+      <div class="brand">
+        <div class="logo-mark" aria-hidden="true">
+          <svg width="34" height="34" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="2" y="2" width="8" height="8" rx="1" fill="#1E40FF" />
+            <rect x="14" y="2" width="8" height="8" rx="1" fill="#4F46E5" />
+            <rect x="2" y="14" width="8" height="8" rx="1" fill="#1E40FF" />
+            <rect x="14" y="14" width="8" height="8" rx="1" fill="#6F6FFF" />
+          </svg>
+        </div>
+        <div class="brand-text">
+          <h1>Pixel Juggle</h1>
+          <p class="tagline">Draw or upload images and watch pixels rearrange in real-time</p>
+        </div>
+      </div>
+
+      <nav class="top-controls" aria-label="mode selection">
+        <button id="uploadModeBtn" class="mode-toggle active" type="button">Upload</button>
+        <button id="drawModeBtn" class="mode-toggle" type="button">Draw</button>
+      </nav>
+    </header>
+
+    <main class="stage-and-modes">
+      <!-- Stage (compact framed) -->
+      <section class="stage card-panel">
+        <div class="stage-frame">
+          <div class="frame-accent"></div>
+          <div class="stage-frame-inner">
+            <canvas id="animationCanvas" width="256" height="256" aria-label="pixel animation canvas"></canvas>
+          </div>
         </div>
 
-        <div id="uploadMode" class="mode-section active">
-            <div class="upload-section">
-                <div class="upload-box">
-                    <h3>Image A (Source)</h3>
-                    <input type="file" id="imageA" accept="image/*">
-                    <label for="imageA" class="upload-label">Choose Image A</label>
-                    <div class="preview-container">
-                        <canvas id="previewA" class="preview-canvas"></canvas>
-                    </div>
+        <div class="stage-footer">
+          <div class="status-pill">
+            <svg class="terminal-icon" width="14" height="14" viewBox="0 0 24 24" fill="none">
+              <path d="M8 9l3 3-3 3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M21 19V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span id="status">Select a mode to begin</span>
+          </div>
+
+          <div class="stage-actions">
+            <button class="btn ghost" id="resetBtn" type="button">Reset</button>
+            <button class="btn primary" id="startBtn" type="button" disabled>Start</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Modes row: horizontal landscape layout of upload + draw -->
+      <section class="modes-row">
+        <!-- UPLOAD MODE -->
+        <div id="uploadMode" class="mode-panel card-panel active" aria-labelledby="uploadModeBtn">
+          <div class="panel-header">
+            <h3 class="panel-title">Upload</h3>
+            <span class="panel-badge panel-badge--upload">A → B</span>
+          </div>
+
+          <div class="uploads">
+            <label class="dropzone" for="imageA">
+              <input id="imageA" type="file" accept="image/*" />
+              <div class="dz-inner">
+                <strong>Source (A)</strong>
+                <span class="dz-hint">Drop image or click</span>
+              </div>
+              <div class="preview-wrap">
+                <canvas id="previewA" class="preview" width="160" height="160" aria-label="preview source"></canvas>
+              </div>
+            </label>
+
+            <label class="dropzone" for="imageB">
+              <input id="imageB" type="file" accept="image/*" />
+              <div class="dz-inner">
+                <strong>Target (B)</strong>
+                <span class="dz-hint">Drop image or click</span>
+              </div>
+              <div class="preview-wrap">
+                <canvas id="previewB" class="preview" width="160" height="160" aria-label="preview target"></canvas>
+              </div>
+            </label>
+          </div>
+
+          <div class="panel-controls">
+            <small class="helper muted">Tip: square images ≈ 256×256 look best.</small>
+          </div>
+        </div>
+
+        <!-- DRAW MODE -->
+        <div id="drawMode" class="mode-panel card-panel" aria-labelledby="drawModeBtn">
+          <div class="panel-header">
+            <h3 class="panel-title">Draw</h3>
+            <span class="panel-badge panel-badge--draw">Live</span>
+          </div>
+
+          <div class="draw-area">
+            <div class="draw-left">
+              <div class="draw-tools">
+                <label class="tool">
+                  <span class="tool-label">Brush</span>
+                  <input id="brushSize" type="range" min="1" max="80" value="6" />
+                  <span id="brushSizeValue" class="tool-value">6px</span>
+                </label>
+
+                <label class="tool color-picker">
+                  <span class="tool-label">Color</span>
+                  <input id="brushColor" type="color" value="#1E40FF" />
+                </label>
+
+                <div class="swatches" role="list" aria-label="quick color swatches">
+                  <button class="swatch" data-color="#1E40FF" title="Deep Blue" aria-label="Deep Blue"></button>
+                  <button class="swatch" data-color="#4F46E5" title="Violet" aria-label="Violet"></button>
+                  <button class="swatch" data-color="#6F6FFF" title="Light Violet" aria-label="Light Violet"></button>
+                  <button class="swatch" data-color="#1E90FF" title="Dodger" aria-label="Dodger"></button>
+                  <button class="swatch" data-color="#2EC4B6" title="Teal" aria-label="Teal"></button>
+                  <button class="swatch" data-color="#000000" title="Black" aria-label="Black"></button>
                 </div>
 
-                <div class="upload-box">
-                    <h3>Image B (Target)</h3>
-                    <input type="file" id="imageB" accept="image/*">
-                    <label for="imageB" class="upload-label">Choose Image B</label>
-                    <div class="preview-container">
-                        <canvas id="previewB" class="preview-canvas"></canvas>
-                    </div>
+                <button id="clearDrawBtn" class="tool-btn" type="button">Clear</button>
+              </div>
+
+              <div class="canvas-draw-wrap">
+                <canvas id="drawCanvas" class="draw-canvas" width="560" height="360" aria-label="drawing canvas"></canvas>
+              </div>
+            </div>
+
+            <div class="draw-right">
+              <label class="dropzone small" for="targetImage">
+                <input id="targetImage" type="file" accept="image/*" />
+                <div class="dz-inner">
+                  <strong>Target</strong>
+                  <span class="dz-hint">Optional reference</span>
                 </div>
-            </div>
-
-            <div class="controls">
-                <button id="startBtn" disabled>Start Animation</button>
-                <button id="resetBtn">Reset</button>
-            </div>
-        </div>
-
-        <div id="drawMode" class="mode-section">
-            <div class="draw-section">
-                <div class="canvas-container">
-                    <h3>Draw Here (Source)</h3>
-                    <div class="drawing-tools">
-                        <label>Brush Size:</label>
-                        <input type="range" id="brushSize" min="1" max="20" value="3">
-                        <span id="brushSizeValue">3px</span>
-                        <label style="margin-left: 20px;">Color:</label>
-                        <input type="color" id="brushColor" value="#000000">
-                        <button id="clearDrawBtn" class="tool-btn">Clear</button>
-                    </div>
-                    <canvas id="drawCanvas" class="draw-canvas"></canvas>
+                <div class="preview-wrap">
+                  <canvas id="targetPreview" class="preview" width="140" height="140" aria-label="target preview"></canvas>
                 </div>
+              </label>
 
-                <div class="canvas-container">
-                    <h3>Target Image</h3>
-                    <input type="file" id="targetImage" accept="image/*">
-                    <label for="targetImage" class="upload-label">Choose Target</label>
-                    <div class="preview-container">
-                        <canvas id="targetPreview" class="preview-canvas"></canvas>
-                    </div>
-                </div>
+              <div class="realtime-controls">
+                <button id="startRealtimeBtn" class="btn primary" type="button" disabled>Start real-time</button>
+                <button id="stopRealtimeBtn" class="btn ghost" type="button" disabled>Stop</button>
+                <button id="resetDrawBtn" class="btn outline" type="button">Reset</button>
+              </div>
             </div>
-
-            <div class="controls">
-                <button id="startRealtimeBtn" disabled>Start Real-Time Animation</button>
-                <button id="stopRealtimeBtn" disabled>Stop Animation</button>
-                <button id="resetDrawBtn">Reset</button>
-            </div>
+          </div>
         </div>
+      </section>
+    </main>
 
-        <div class="animation-container">
-            <canvas id="animationCanvas"></canvas>
-        </div>
+    <footer class="site-footer">
+      <small class="muted">© Pixel Juggle — playful pixel rearrangements</small>
+    </footer>
+  </div>
 
-        <div class="info">
-            <p id="status">Select a mode to begin</p>
-        </div>
-    </div>
-
-    <script src="script.js"></script>
+  <!-- script.js unchanged -->
+  <script src="script.js"></script>
 </body>
 </html>
