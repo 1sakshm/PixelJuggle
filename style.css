@@ -1,908 +1,493 @@
+/* style.css — Landscape modes layout, clean & horizontal, Option B palette
+   No JS changes. All original IDs preserved.
+*/
+
+/* Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Space+Grotesk:wght@400;600&display=swap');
 
 :root {
-    --bg-1: #0f0f1a;
-    --bg-2: #11131b;
-    --accent: #ff7a1a;
-    --accent-2: #ffd29b;
-    --muted: #9aa4b2;
-    --card: rgba(255,255,255,0.04);
-    --glass: rgba(255,255,255,0.03);
-    --glass-strong: rgba(255,255,255,0.06);
-    --glass-border: rgba(255,255,255,0.06);
-    --radius: 14px;
-    --radius-sm: 8px;
-    --shadow-lg: 0 20px 40px rgba(2,6,23,0.6);
-    --shadow-md: 0 8px 20px rgba(2,6,23,0.45);
-    --max-width: 1180px;
+  --bg-1: #05050a;
+  --panel: rgba(18,18,28,0.96);
+  --glass-border: rgba(255,255,255,0.06);
+  --muted: rgba(220,225,240,0.64);
+
+  /* Option B palette */
+  --blue-deep: #1E40FF;
+  --violet: #4F46E5;
+  --light-violet: #6F6FFF;
+  --accent-soft: rgba(111,111,255,0.12);
+
+  --radius-md: 14px;
+  --radius-sm: 10px;
+
+  --shadow-sm: 0 6px 18px rgba(0,0,0,0.6);
+  --shadow-md: 0 12px 36px rgba(2,6,18,0.7);
+  --shadow-lg: 0 26px 72px rgba(2,6,18,0.85);
+
+  --t-fast: 0.14s ease;
+  --t-med: 0.22s cubic-bezier(.2,.9,.3,1);
+
+  --max-width: 1180px;
 }
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
-html, body {
-    height: 100%;
-}
+
+/* Reset */
+* { box-sizing: border-box; }
+html, body { height: 100%; }
 body {
-    font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
-    background: 
-        linear-gradient(0deg, transparent 24%, rgba(255,122,26,0.1) 25%, rgba(255,122,26,0.1) 26%, transparent 27%, transparent 74%, rgba(255,122,26,0.1) 75%, rgba(255,122,26,0.1) 76%, transparent 77%, transparent),
-        linear-gradient(90deg, transparent 24%, rgba(255,122,26,0.1) 25%, rgba(255,122,26,0.1) 26%, transparent 27%, transparent 74%, rgba(255,122,26,0.1) 75%, rgba(255,122,26,0.1) 76%, transparent 77%, transparent),
-        radial-gradient(1200px 600px at 10% 10%, rgba(255,122,26,0.06), transparent 6%),
-        linear-gradient(180deg, var(--bg-1), var(--bg-2));
-    background-size: 50px 50px, 50px 50px, 100% 100%, 100% 100%;
-    background-attachment: fixed, fixed, fixed, fixed;
-    color: #eaf0f6;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    padding: 48px 24px;
-    position: relative;
+  margin: 0;
+  font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Arial;
+  background:
+    radial-gradient(900px 480px at 10% 0%, rgba(79,70,229,0.12), transparent 55%),
+    radial-gradient(900px 560px at 90% 100%, rgba(30,64,255,0.08), transparent 55%),
+    linear-gradient(180deg, var(--bg-1), #070714);
+  color: #eef6ff;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  padding: 22px;
 }
 
-.container {
-    max-width: var(--max-width);
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 28px;
+/* Page */
+.page {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
 }
 
-.header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 20px;
+/* Header */
+.site-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
 }
-.header-left {
-    display: flex;
-    flex-direction: column;
+.brand { display: flex; align-items: center; gap: 12px; }
+.logo-mark {
+  width: 46px; height: 46px; border-radius: 12px;
+  display: grid; place-items: center;
+  background: radial-gradient(circle at 0 0, rgba(79,70,229,0.18), transparent 40%),
+              radial-gradient(circle at 100% 100%, rgba(30,64,255,0.12), transparent 40%),
+              linear-gradient(145deg, #0a0a12, #04040a);
+  border: 1px solid rgba(255,255,255,0.08);
+  box-shadow: 0 10px 28px rgba(0,0,0,0.9);
+  transition: transform var(--t-med), box-shadow var(--t-med);
 }
-h1 {
-    font-family: 'Space Grotesk', 'Inter';
-    font-weight: 700;
-    font-size: 28px;
-    letter-spacing: -0.02em;
+.logo-mark:hover { transform: translateY(-2px) scale(1.02); box-shadow: 0 16px 36px rgba(0,0,0,0.95); }
+
+.brand-text h1 { font-family: 'Space Grotesk', Inter, sans-serif; margin: 0; font-size: 18px; }
+.tagline { margin: 2px 0 0; color: var(--muted); font-size: 13px; }
+
+/* Mode toggles */
+.top-controls { display: flex; gap: 10px; }
+.mode-toggle {
+  padding: 8px 14px; border-radius: 999px;
+  background: rgba(8,10,16,0.78);
+  border: 1px solid rgba(255,255,255,0.06);
+  color: var(--muted); font-weight: 700; font-size: 12px; cursor: pointer;
+  transition: transform var(--t-fast), box-shadow var(--t-fast), background var(--t-fast);
 }
-.description {
-    color: var(--muted);
-    font-size: 14px;
-    margin-top: 6px;
+.mode-toggle.active {
+  background: linear-gradient(120deg, var(--blue-deep), var(--violet));
+  color: #04111b;
+  box-shadow: 0 10px 28px rgba(30,64,255,0.16);
 }
 
+/* Main layout: stage + modes row (landscape) */
+.stage-and-modes {
+  display: grid;
+  grid-template-columns: 1fr 780px; /* stage left, wide modes area right */
+  gap: 18px;
+  align-items: start;
+}
+
+/* Card panel */
 .card-panel {
-    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-    border-radius: var(--radius);
-    padding: 22px;
-    box-shadow: var(--shadow-lg);
-    border: 1px solid rgba(255,255,255,0.03);
+  background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.005)), var(--panel);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--shadow-md);
+  transition: transform var(--t-med), box-shadow var(--t-med);
+}
+.card-panel:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); }
+
+/* Stage */
+.stage { display: flex; flex-direction: column; gap: 10px; align-items: center; }
+.stage-frame {
+  position: relative;
+  width: 100%;
+  max-width: 640px;
+  display: flex;
+  justify-content: center;
+  padding: 12px;
+  border-radius: 18px;
+  background: linear-gradient(135deg, rgba(5,8,14,0.96), rgba(10,12,20,0.98));
+  border: 1px solid rgba(255,255,255,0.03);
+  overflow: hidden;
+}
+.frame-accent {
+  position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(120deg, var(--accent-soft), rgba(111,111,255,0.06));
+  filter: blur(8px); opacity: 0.95;
+}
+.stage-frame-inner {
+  padding: 3px; border-radius: 14px;
+  background: linear-gradient(180deg, var(--blue-deep), var(--violet));
+  box-shadow: 0 8px 20px rgba(2,8,20,0.6);
+  transition: transform var(--t-fast);
+}
+.stage:hover .stage-frame-inner { transform: translateY(-1px) scale(1.01); }
+
+/* Animation canvas */
+#animationCanvas {
+  display: block;
+  width: 240px;
+  height: 240px;
+  border-radius: 12px;
+  background: #030306;
+  box-shadow: 0 10px 30px rgba(2,6,16,0.8);
 }
 
-.top-row {
-    display: flex;
-    gap: 20px;
-    align-items: stretch;
+/* Stage footer */
+.stage-footer { width: 100%; display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.status-pill {
+  flex: 1; display: flex; gap: 8px; align-items: center; padding: 8px 12px; border-radius: 999px;
+  background: linear-gradient(90deg, rgba(11,14,20,0.96), rgba(6,8,12,0.96));
+  border: 1px solid rgba(255,255,255,0.04); color: var(--muted); font-weight: 600;
 }
-.left-col {
-    flex: 1;
-}
-.right-col {
-    width: 420px;
-}
+.status-pill svg { color: var(--blue-deep); }
+#status { color: #f4f7ff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
-.mode-selector {
-    display: flex;
-    gap: 10px;
-    padding: 8px;
-    background: transparent;
-    border-radius: 12px;
-}
-.mode-btn {
-    padding: 8px 16px;
-    border-radius: 10px;
-    border: 1px solid transparent;
-    background: transparent;
-    color: var(--muted);
-    cursor: pointer;
-    font-weight: 600;
-}
-.mode-btn.active {
-    background: linear-gradient(90deg, var(--accent), #ffb07a);
-    color: #081018;
-    box-shadow: 0 6px 18px rgba(255,122,26,0.14);
-    border-color: rgba(255,255,255,0.04);
-}
-
-.upload-section {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 18px;
-    margin-top: 18px;
-}
-.upload-box {
-    background: linear-gradient(180deg, rgba(255,255,255,0.02), transparent);
-    padding: 14px;
-    border-radius: 12px;
-    border: 1px solid var(--glass-border);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 12px;
-}
-.upload-box h3 {
-    font-size: 15px;
-    color: #f6f8fb;
-    margin: 6px 0;
-}
-.upload-label {
-    background: linear-gradient(180deg, var(--accent), var(--accent-2));
-    color: #081018;
-    padding: 10px 16px;
-    border-radius: 10px;
-    font-weight: 700;
-    cursor: pointer;
-    border: none;
-}
-.file-input {
-    display: none;
-}
-.preview-container {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 10px;
-}
-.preview-canvas {
-    width: 220px;
-    height: 220px;
-    border-radius: 10px;
-    background: #0b0c10;
-    border: 1px solid rgba(255,255,255,0.03);
-    box-shadow: var(--shadow-md);
-    object-fit: cover;
-}
-
-.controls {
-    display: flex;
-    gap: 12px;
-    justify-content: center;
-    margin-top: 14px;
-}
-.btn {
-    padding: 10px 18px;
-    border-radius: 10px;
-    border: none;
-    cursor: pointer;
-    font-weight: 700;
-}
+/* Buttons */
+.stage-actions { display: flex; gap: 8px; }
+.btn { border: 0; border-radius: 999px; padding: 8px 12px; font-size: 13px; font-weight: 700; cursor: pointer; }
 .btn.primary {
-    background: linear-gradient(90deg, var(--accent), #ffb07a);
-    color: #081018;
-    box-shadow: 0 10px 30px rgba(255,122,26,0.14);
+  background: linear-gradient(120deg, var(--blue-deep), var(--violet));
+  color: #04111b; box-shadow: 0 12px 28px rgba(30,64,255,0.12);
 }
-.btn.ghost {
-    background: transparent;
-    border: 1px solid rgba(255,255,255,0.06);
-    color: var(--muted);
-}
-.btn:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
+.btn.primary:disabled { opacity: 0.45; cursor: default; box-shadow: none; }
+.btn.ghost { background: transparent; border: 1px solid rgba(255,255,255,0.06); color: var(--muted); }
+.btn.outline { background: transparent; border: 1px solid rgba(111,111,255,0.18); color: #dbe6ff; }
+
+/* Modes row (right column) — landscape layout of upload + draw panels */
+.modes-row {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
 }
 
-.draw-section {
-    display: grid;
-    grid-template-columns: 1fr 420px;
-    gap: 18px;
-    margin-top: 18px;
-}
-.canvas-container {
-    background: linear-gradient(180deg, rgba(255,255,255,0.02), transparent);
-    padding: 14px;
-    border-radius: 12px;
-    border: 1px solid rgba(255,255,255,0.03);
-}
-.canvas-container h3 {
-    font-size: 15px;
-    margin-bottom: 10px;
-}
-.draw-canvas {
-    width: 100%;
-    height: 360px;
-    border-radius: 10px;
-    border: 1px solid rgba(255,255,255,0.04);
-    background: #0b0c10;
-    cursor: crosshair;
-    display: block;
+/* Inside modes area we have a horizontal panels row for landscape effect */
+.modes-row .mode-panels {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
 }
 
-.drawing-tools {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 8px;
-    border-radius: 10px;
-    background: linear-gradient(180deg, rgba(255,255,255,0.01), transparent);
-    border: 1px solid rgba(255,255,255,0.02);
-}
-.drawing-tools label {
-    font-size: 13px;
-    color: var(--muted);
-    font-weight: 600;
-}
-.tool-btn {
-    padding: 8px 12px;
-    border-radius: 8px;
-    background: transparent;
-    border: 1px solid rgba(255,255,255,0.04);
-    color: var(--muted);
-    cursor: pointer;
-}
-#brushSize {
-    width: 110px;
-}
-#brushSizeValue {
-    color: var(--accent);
-    font-weight: 700;
+/* When rendering, the #uploadMode and #drawMode elements are direct children of .modes-row.
+   To make them sit side-by-side, apply a small helper container via CSS grid/flex:
+   treat .modes-row as container and its direct children as panels in a row. */
+.modes-row > #uploadMode,
+.modes-row > #drawMode {
+  flex: 1 1 50%;
+  min-width: 260px;
 }
 
-.animation-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 10px;
-    border-radius: 12px;
-    border: 1px solid rgba(255,255,255,0.03);
-    background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.005));
-}
-#animationCanvas {
-    width: 256px;
-    height: 256px;
-    border-radius: 10px;
-    border: 2px solid rgba(255,255,255,0.04);
-    box-shadow: 0 18px 40px rgba(2,6,23,0.6);
-}
+/* Panel content */
+.panel-header { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.panel-title { margin: 0; font-size: 13px; text-transform: uppercase; letter-spacing: 0.16em; color: rgba(245,245,255,0.9); }
+.panel-badge { padding: 4px 9px; border-radius: 999px; font-size: 11px; text-transform: uppercase; letter-spacing: 0.12em; }
 
-.status-bar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 12px 16px;
-    border-radius: 10px;
-    background: linear-gradient(90deg, rgba(255,255,255,0.015), transparent);
-    border: 1px solid rgba(255,255,255,0.02);
-    color: var(--muted);
-    font-weight: 600;
+/* Uploads (compact) */
+.uploads { display: flex; gap: 10px; align-items: center; }
+.dropzone {
+  position: relative; flex: 1; min-width: 140px; padding: 10px; border-radius: 12px;
+  border: 1px dashed rgba(255,255,255,0.04);
+  background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.005)), rgba(6,8,14,0.95);
+  cursor: pointer; transition: transform var(--t-fast), box-shadow var(--t-fast), border-color var(--t-fast);
 }
+.dropzone.small { max-width: 220px; }
+.dropzone:hover { transform: translateY(-3px); border-color: rgba(79,70,229,0.18); box-shadow: 0 18px 40px rgba(0,0,0,0.85); }
+.dropzone input[type="file"] { display: none; }
+.dz-inner { text-align: center; z-index: 2; }
+.dz-inner strong { display: block; font-weight: 700; color: #eaf6ff; }
+.dz-hint { font-size: 12px; color: var(--muted); }
 
-.footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    color: var(--muted);
-    font-size: 13px;
-    padding-top: 6px;
+/* Previews */
+.preview-wrap { margin-top: 8px; display: flex; justify-content: center; align-items: center; }
+.preview {
+  width: 140px; height: 140px; border-radius: 10px; background: #020307; border: 1px solid rgba(255,255,255,0.04);
+  box-shadow: 0 10px 26px rgba(2,6,16,0.8); transition: transform var(--t-med), border-color var(--t-med);
 }
+.dropzone:hover .preview { transform: translateY(-3px) scale(1.02); border-color: rgba(79,70,229,0.28); }
 
-/* small screens */
-@media (max-width: 1000px) {
-    .top-row {
-        flex-direction: column;
-    }
-    .draw-section {
-        grid-template-columns: 1fr;
-    }
-    .right-col {
-        width: 100%;
-    }
-    .preview-canvas {
-        width: 180px;
-        height: 180px;
-    }
-    #animationCanvas {
-        max-width: 100%;
-    }
+/* Draw area */
+.draw-area { display: flex; gap: 12px; align-items: flex-start; }
+.draw-left { flex: 1; display: flex; flex-direction: column; gap: 10px; }
+.draw-right { width: 220px; display:flex; flex-direction: column; gap: 10px; align-items: stretch; }
+
+/* Tools */
+.draw-tools {
+  display: flex; flex-wrap: wrap; gap: 10px; align-items: center; padding: 8px;
+  border-radius: 999px; background: linear-gradient(90deg, rgba(30,30,40,0.9), rgba(12,14,20,0.95));
+  border: 1px solid rgba(111,111,255,0.08);
 }
+.tool { display: flex; gap: 6px; align-items: center; }
+.tool-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; color: rgba(230,230,255,0.9); }
+.tool-value { color: var(--light-violet); font-weight: 800; min-width: 44px; text-align: right; }
 
-@media (max-width: 520px) {
-    body {
-        padding: 20px;
-    }
-    h1 {
-        font-size: 20px;
-    }
-    .preview-canvas {
-        width: 140px;
-        height: 140px;
-    }
-    .draw-canvas {
-        height: 260px;
-    }
-    .controls {
-        flex-direction: column;
-    }
-}
-
-button:focus,
-.btn:focus,
-.mode-btn:focus {
-    outline: 2px solid rgba(255,122,26,0.14);
-    outline-offset: 3px;
-}
-
-/* small helpers */
-.muted {
-    color: var(--muted);
-}
-.center {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-@import url('https://fonts.googleapis.com/css2?family=Inter+Tight:wght@100;200;300;400;500;600;700;800;900&display=swap');
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-:root {
-    --accent-color: #FF6600;
-    --accent-hover: #e67d17;
-    --accent-dark: #d97014;
-    --dark-bg: #000000;
-    --card-bg: #1e1e1e;
-    --card-bg-hover: #232323;
-    --glass-bg: rgba(30, 30, 30, 0.8);
-    --text-primary: #ffffff;
-    --text-secondary: rgba(255, 255, 255, 0.7);
-    --text-muted: rgba(255, 255, 255, 0.5);
-    --border-color: rgba(255, 255, 255, 0.1);
-    --border-accent: rgba(255, 102, 0, 0.3);
-
-    --shadow-sm: 0 2px 10px rgba(0, 0, 0, 0.2);
-    --shadow-md: 0 4px 20px rgba(0, 0, 0, 0.3);
-    --shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.5);
-    --shadow-accent: 0 4px 15px rgba(255, 102, 0, 0.4);
-    --shadow-accent-lg: 0 12px 30px rgba(255, 102, 0, 0.4);
-
-    --radius-sm: 8px;
-    --radius-md: 16px;
-    --radius-lg: 20px;
-    --radius-xl: 50px;
-
-    --spacing-xs: 8px;
-    --spacing-sm: 12px;
-    --spacing-md: 20px;
-    --spacing-lg: 32px;
-    --spacing-xl: 48px;
-
-    --font-main: 'Inter Tight', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-}
-body {
-    font-family: var(--font-main);
-    font-size: 16px;
-    line-height: 1.6;
-    color: var(--text-primary);
-    background-color: var(--dark-bg);
-    min-height: 100vh;
-    scroll-behavior: smooth;
-}
-
-h1, h2, h3, h4, h5, h6 {
-    font-family: var(--font-main);
-    color: var(--text-primary);
-    line-height: 1.2;
-    margin-bottom: var(--spacing-md);
-    letter-spacing: -0.02em;
-}
-
-h1 {
-    font-size: clamp(2rem, 6vw, 4.5rem);
-    font-weight: 800;
-    background: linear-gradient(135deg, #ffffff, #a0a0a0);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    margin-bottom: var(--spacing-lg);
-}
-
-h2 {
-    font-size: clamp(1.75rem, 4vw, 3.5rem);
-    font-weight: 300;
-}
-
-h3 {
-    font-size: clamp(1.25rem, 2.5vw, 2rem);
-    font-weight: 600;
-}
-
-p {
-    margin-bottom: var(--spacing-sm);
-    color: var(--text-secondary);
-    line-height: 1.7;
-}
-
-.description {
-    color: var(--text-secondary);
-    font-size: clamp(1rem, 2vw, 1.3rem);
-    line-height: 1.7;
-    text-align: center;
-}
-
-.highlight-text {
-    color: var(--accent-color);
-    font-weight: 600;
-}
-.container {
-    max-width: 1200px;
-    width: 100%;
-    margin: 0 auto;
-    padding: var(--spacing-xl) var(--spacing-md);
-}
-
-.card,
-.upload-box,
-.canvas-container {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid var(--border-color);
-    border-radius: var(--radius-md);
-    padding: var(--spacing-md);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    box-shadow: var(--shadow-sm);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.card:hover,
-.upload-box:hover,
-.canvas-container:hover {
-    background: rgba(255, 255, 255, 0.08);
-    border-color: var(--border-accent);
-    transform: translateY(-4px);
-    box-shadow: var(--shadow-md);
-}
-
-.upload-section,
-.draw-section {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: var(--spacing-lg);
-    margin-bottom: var(--spacing-lg);
-}
-
-.upload-box h3,
-.canvas-container h3 {
-    color: var(--text-primary);
-    margin-bottom: var(--spacing-md);
-    font-size: 1.3rem;
-    font-weight: 600;
-    text-align: center;
-}
-
-button,
-.btn {
-    background: linear-gradient(135deg, var(--accent-color), var(--accent-hover));
-    color: #0a0a0a;
-    border: none;
-    border-radius: var(--radius-sm);
-    padding: 14px 32px;
-    font-size: 1rem;
-    font-weight: 700;
-    font-family: var(--font-main);
-    cursor: pointer;
-    box-shadow: var(--shadow-accent);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    text-decoration: none;
-    display: inline-block;
-    text-align: center;
-}
-
-button:hover:not(:disabled),
-.btn:hover:not(:disabled) {
-    background: linear-gradient(135deg, var(--accent-hover), var(--accent-dark));
-    transform: translateY(-3px);
-    box-shadow: var(--shadow-accent-lg);
-}
-
-button:active:not(:disabled),
-.btn:active:not(:disabled) {
-    transform: translateY(0);
-}
-
-button:disabled,
-.btn:disabled {
-    background: #cccccc;
-    color: #888888;
-    cursor: not-allowed;
-    box-shadow: none;
-    opacity: 0.6;
-}
-
-button:disabled:hover,
-.btn:disabled:hover {
-    transform: none;
-}
-
-.btn-secondary {
-    background: rgba(40, 40, 40, 0.8);
-    color: var(--text-primary);
-    box-shadow: var(--shadow-sm);
-}
-
-.btn-secondary:hover {
-    background: rgba(255, 102, 0, 0.1);
-    color: var(--accent-color);
-}
-
-.btn-outline {
-    background: transparent;
-    border: 2px solid var(--accent-color);
-    color: var(--accent-color);
-    box-shadow: none;
-}
-
-.btn-outline:hover {
-    background: var(--accent-color);
-    color: #0a0a0a;
-}
-
-.mode-selector {
-    display: flex;
-    justify-content: center;
-    gap: var(--spacing-sm);
-    margin-bottom: var(--spacing-lg);
-    padding: var(--spacing-sm);
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid var(--border-color);
-    border-radius: var(--radius-md);
-    box-shadow: var(--shadow-sm);
-}
-
-.mode-btn {
-    background: transparent;
-    border: 2px solid var(--border-color);
-    color: var(--text-primary);
-    padding: 10px 24px;
-    font-size: 0.95rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    border-radius: var(--radius-sm);
-    cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.mode-btn:hover {
-    border-color: var(--border-accent);
-    color: var(--accent-color);
-    transform: translateY(-2px);
-}
-
-.mode-btn.active {
-    background: var(--accent-color);
-    border-color: var(--accent-color);
-    color: #0a0a0a;
-    box-shadow: var(--shadow-accent);
-}
-
-.mode-btn.active:hover {
-    background: var(--accent-hover);
-}
-
-.mode-section {
-    display: none;
-}
-
-.mode-section.active {
-    display: block;
-}
-
-input[type="file"] {
-    display: none;
-}
-
-.upload-label {
-    display: inline-block;
-    background: var(--accent-color);
-    color: #0a0a0a;
-    padding: 12px 28px;
-    border-radius: var(--radius-sm);
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: var(--shadow-accent);
-}
-
-.upload-label:hover {
-    background: var(--accent-hover);
-    transform: scale(1.02);
-    box-shadow: var(--shadow-accent-lg);
-}
-
+/* Range + color */
 input[type="range"] {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 120px;
-    height: 6px;
-    border-radius: 3px;
-    background: var(--border-color);
-    outline: none;
-    transition: background 0.3s;
+  -webkit-appearance: none; appearance: none; width: 120px; height: 6px; border-radius: 999px; background: rgba(255,255,255,0.12); outline: none;
 }
-
-input[type="range"]:hover {
-    background: rgba(255, 255, 255, 0.15);
-}
-
 input[type="range"]::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 18px;
-    height: 18px;
-    border-radius: 50%;
-    background: var(--accent-color);
-    cursor: pointer;
-    transition: all 0.3s;
-    box-shadow: 0 2px 8px rgba(255, 102, 0, 0.5);
+  -webkit-appearance: none; width: 16px; height: 16px; border-radius: 50%;
+  background: var(--light-violet); box-shadow: 0 4px 12px rgba(79,70,229,0.28); cursor: pointer;
 }
-
-input[type="range"]::-webkit-slider-thumb:hover {
-    background: var(--accent-hover);
-    transform: scale(1.1);
-}
-
-input[type="range"]::-moz-range-thumb {
-    width: 18px;
-    height: 18px;
-    border-radius: 50%;
-    background: var(--accent-color);
-    cursor: pointer;
-    border: none;
-    transition: all 0.3s;
-    box-shadow: 0 2px 8px rgba(255, 102, 0, 0.5);
-}
-
-input[type="range"]::-moz-range-thumb:hover {
-    background: var(--accent-hover);
-    transform: scale(1.1);
-}
-
 input[type="color"] {
-    width: 50px;
-    height: 40px;
-    border: 2px solid var(--border-color);
-    border-radius: var(--radius-sm);
-    cursor: pointer;
-    background: transparent;
-    transition: border-color 0.3s;
+  width: 44px; height: 36px; border-radius: 8px; padding: 0; border: 2px solid rgba(255,255,255,0.06);
+  cursor: pointer; transition: transform var(--t-fast), box-shadow var(--t-fast);
 }
 
-input[type="color"]:hover {
-    border-color: var(--accent-color);
+/* Swatches */
+.swatches { display:flex; gap:8px; align-items:center; }
+.swatch {
+  width: 28px; height: 28px; border-radius: 6px; border: 2px solid rgba(255,255,255,0.06);
+  cursor: pointer; box-shadow: 0 8px 18px rgba(0,0,0,0.6);
+  transition: transform var(--t-fast), box-shadow var(--t-fast), outline var(--t-fast);
+  padding: 0; background: #fff;
 }
+.swatch:hover { transform: translateY(-3px); box-shadow: 0 12px 28px rgba(0,0,0,0.85); }
+.swatch--active { outline: 3px solid rgba(79,70,229,0.24); transform: scale(1.06); }
 
-.drawing-tools {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: var(--spacing-sm);
-    padding: var(--spacing-md);
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid var(--border-color);
-    border-radius: var(--radius-sm);
-    margin-bottom: var(--spacing-md);
-    flex-wrap: wrap;
+/* Canvas draw-wrap */
+.canvas-draw-wrap {
+  border-radius: 16px; overflow: hidden; border: 1px solid rgba(111,111,255,0.12);
+  background: radial-gradient(circle at 0 0, rgba(79,70,229,0.12), transparent 60%), rgba(5,5,12,0.98);
+  box-shadow: 0 18px 48px rgba(0,0,0,0.95); padding: 8px;
 }
-
-.drawing-tools label {
-    font-weight: 600;
-    color: var(--text-primary);
-    font-size: 0.9rem;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-}
-
-#brushSizeValue {
-    color: var(--accent-color);
-    font-weight: 700;
-    min-width: 45px;
-    font-size: 0.95rem;
-}
-
-.tool-btn {
-    padding: 8px 20px;
-    font-size: 0.9rem;
-    background: rgba(40, 40, 40, 0.8);
-    color: var(--text-primary);
-    box-shadow: var(--shadow-sm);
-}
-
-.tool-btn:hover {
-    background: rgba(255, 102, 0, 0.1);
-    color: var(--accent-color);
-    transform: scale(1.02);
-}
-
-.preview-container {
-    margin-top: var(--spacing-md);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 180px;
-}
-
-.preview-canvas {
-    border: 2px solid var(--border-color);
-    border-radius: var(--radius-sm);
-    max-width: 100%;
-    height: auto;
-    box-shadow: var(--shadow-sm);
-    transition: border-color 0.3s;
-}
-
-.preview-canvas:hover {
-    border-color: var(--accent-color);
-}
-
 .draw-canvas {
-    border: 3px solid var(--accent-color);
-    border-radius: var(--radius-sm);
-    background: #000000;
-    cursor: crosshair;
-    box-shadow: 0 4px 20px rgba(255, 102, 0, 0.3);
-    transition: box-shadow 0.3s;
+  display:block; width:100%; height:360px; background: linear-gradient(180deg, #0b0b0d, #050508);
+  border-radius: 10px; box-shadow: inset 0 6px 12px rgba(0,0,0,0.6); cursor: crosshair;
 }
 
-.draw-canvas:hover {
-    box-shadow: 0 8px 30px rgba(255, 102, 0, 0.5);
+/* Tool button */
+.tool-btn {
+  border: 0; border-radius: 999px; padding: 6px 12px; font-size: 11px;
+  background: rgba(255,255,255,0.04); color: #f6f2ff; cursor: pointer;
+  transition: transform var(--t-fast), box-shadow var(--t-fast);
+}
+.tool-btn:hover { transform: translateY(-1px); box-shadow: 0 10px 24px rgba(0,0,0,0.8); }
+
+/* Realtime controls */
+.realtime-controls { display:flex; flex-direction: column; gap: 8px; }
+
+/* Mini note */
+.mini-note { padding: 10px; }
+.note-row { display:flex; align-items:flex-start; gap:10px; }
+.dot { width:8px; height:8px; border-radius:999px; background: var(--light-violet); box-shadow:0 0 12px rgba(111,111,255,0.8); }
+.muted { color: var(--muted); font-size: 12px; }
+
+/* Footer */
+.site-footer { text-align:center; margin-top:2px; font-size:12px; color: var(--muted); }
+
+/* Focus */
+.mode-toggle:focus, .btn:focus, .swatch:focus, .dropzone:focus, input[type="color"]:focus {
+  outline: 3px solid rgba(79,70,229,0.18);
+  outline-offset: 3px;
 }
 
-.animation-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: var(--spacing-lg);
-    min-height: 320px;
-    padding: var(--spacing-md);
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid var(--border-color);
-    border-radius: var(--radius-md);
+/* Responsive: collapse modes row into vertical stack on narrow screens */
+@media (max-width: 1080px) {
+  .stage-and-modes { grid-template-columns: 1fr; }
+  .modes-row { display: flex; flex-direction: column; gap: 14px; }
+  .modes-row > #uploadMode, .modes-row > #drawMode { width: 100%; }
+  #animationCanvas { width: 220px; height: 220px; }
+  .draw-canvas { height: 320px; }
 }
 
-#animationCanvas {
-    border: 3px solid var(--accent-color);
-    border-radius: var(--radius-sm);
-    box-shadow: 0 8px 25px rgba(255, 102, 0, 0.4);
-    max-width: 100%;
-    height: auto;
+/* Small screens */
+@media (max-width: 640px) {
+  .page { padding: 14px; }
+  .logo-mark { width: 40px; height: 40px; }
+  .preview { width: 140px; height: 140px; }
+  .draw-canvas { height: 260px; }
 }
 
-.controls {
-    display: flex;
-    justify-content: center;
-    gap: var(--spacing-md);
-    margin-bottom: var(--spacing-lg);
-    flex-wrap: wrap;
+/* keep canvases rounded */
+#previewA, #previewB, #targetPreview, #animationCanvas, #drawCanvas { border-radius: 10px; }
+
+/* ---------------------------
+  Fix: show only active mode panel in landscape modes-row
+  and remove small preview box in draw mode (CSS-only)
+  --------------------------- */
+
+/* Ensure mode panels within the modes-row are hidden by default,
+   and only the one with .active is displayed (flex column). */
+.modes-row > #uploadMode,
+.modes-row > #drawMode {
+  display: none;
+  flex-direction: column;
+  gap: 12px;
 }
 
-.info {
-    text-align: center;
-    margin-top: var(--spacing-lg);
+/* When your script toggles .active on a panel, show that panel */
+.modes-row > #uploadMode.active,
+.modes-row > #drawMode.active {
+  display: flex;
 }
 
-#status {
-    color: var(--text-primary);
-    font-size: 1rem;
-    font-weight: 500;
-    padding: var(--spacing-sm) var(--spacing-md);
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid var(--border-color);
-    border-left: 4px solid var(--accent-color);
-    border-radius: var(--radius-sm);
-    display: inline-block;
+/* Clean up the draw mode: hide the preview canvas box inside draw mode
+   (removes the 'random' small preview box) */
+#drawMode .preview-wrap,
+#drawMode .preview {
+  display: none !important;
 }
 
-@media (max-width: 768px) {
-    h1 {
-        font-size: 2rem;
-    }
-
-    h2 {
-        font-size: 1.75rem;
-    }
-
-    h3 {
-        font-size: 1.25rem;
-    }
-
-    .container {
-        padding: var(--spacing-md);
-    }
-    
-    
-    .upload-section,
-    .draw-section {
-        grid-template-columns: 1fr;
-        gap: var(--spacing-md);
-    }
-    
-    .controls {
-        flex-direction: column;
-        width: 100%;
-    }
-
-    button,
-    .btn {
-        width: 100%;
-        padding: 14px 24px;
-    }
-
-    .mode-selector {
-        flex-direction: column;
-        gap: var(--spacing-xs);
-    }
-
-    .mode-btn {
-        width: 100%;
-    }
-
-    .drawing-tools {
-        font-size: 0.85rem;
-        gap: var(--spacing-xs);
-    }
+/* If you want the target dropzone in draw mode to remain but without the
+   extra preview area, make it compact and inline */
+#drawMode .dropzone.small {
+  padding: 10px;
+  min-height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.text-center {
-    text-align: center;
+/* optional - remove dashed border for the small dropzone in draw mode
+   to make it visually less boxy */
+#drawMode .dropzone.small {
+  border-style: solid;
+  border-width: 1px;
+  border-color: rgba(255,255,255,0.03);
+  background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.004));
 }
 
-.hidden {
+/* tiny responsive tweak: ensure panels still stack on small screens */
+@media (max-width: 1080px) {
+  .modes-row > #uploadMode,
+  .modes-row > #drawMode {
+    display: flex !important;
+    width: 100%;
+  }
+  /* keep draw preview hidden on small screens too */
+  #drawMode .preview-wrap { display: none !important; }
+}
+
+/* --- FIX: Prevent draw panel from overflowing screen --- */
+
+/* Make the draw panel narrower */
+#drawMode {
+  max-width: 520px;   /* reduce from big ~780px panel */
+}
+
+/* Reduce draw area width */
+#drawMode .draw-area {
+  flex-direction: column;
+}
+
+/* Reduce the draw canvas width so it fits the screen */
+#drawCanvas {
+  width: 100% !important;
+  max-width: 460px !important;
+  height: 300px !important; /* maintain aspect but smaller */
+}
+
+/* Keep target panel aligned */
+#drawMode .draw-right {
+  width: 100%;
+  max-width: 320px;
+  margin: 0 auto;
+}
+
+/* Reduce swatches & tools width so they don't stretch */
+#drawMode .draw-tools {
+  flex-wrap: wrap;
+  justify-content: center;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+/* Fix entire modes-row width so both upload + draw fit horizontally */
+.modes-row {
+  max-width: 100%;
+  overflow: hidden;
+}
+
+/* Tighten inside padding for a cleaner layout */
+#drawMode.card-panel {
+  padding: 12px;
+}
+
+/* --- FIX 1: Remove the bottom empty area in draw panel --- */
+
+#drawMode .draw-area {
+  display: flex;
+  flex-direction: row;   /* Put canvas + tools in one row */
+  align-items: flex-start;
+}
+
+/* Remove unused right section completely */
+#drawMode .draw-right {
+  display: none !important;
+}
+
+/* Make the draw canvas group take full height with no extra bottom padding */
+#drawMode .canvas-draw-wrap {
+  margin-bottom: 0 !important;
+}
+
+/* --- FIX 2: Shift the draw panel slightly to the RIGHT for clean spacing --- */
+
+#drawMode.card-panel {
+  margin-left: 20px;   /* move panel slightly right */
+  max-width: 600px;    /* keep it from stretching too wide */
+}
+
+/* Keep its inside content centered & neat */
+#drawMode .draw-left {
+  width: 100%;
+  margin: 0 auto;
+}
+
+/* Canvas width control so it fits nicely */
+#drawCanvas {
+  width: 100% !important;
+  max-width: 540px !important;
+  height: 320px !important;
+}
+
+/* --- REMOVE the dark bottom region under the DRAW CANVAS --- */
+
+#drawMode .canvas-draw-wrap {
+    background: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+/* Make the draw canvas sit DIRECTLY inside the panel with no extra space */
+#drawCanvas {
+    display: block;
+    margin: 0 auto;
+    border-radius: 10px !important;
+    box-shadow: 0 0 0 1px rgba(255,255,255,0.1) !important; /* keep clean border */
+}
+
+/* Remove ANY leftover spacing below */
+#drawMode .draw-left {
+    margin-bottom: 0 !important;
+    padding-bottom: 0 !important;
+}
+
+#drawMode .draw-area {
+    margin-bottom: 0 !important;
+    padding-bottom: 0 !important;
+}
+
+/* REMOVE the color boxes (swatches) under brush size */
+#drawMode .swatches,
+#drawMode .swatch {
     display: none !important;
-}
-
-.visible {
-    display: block !important;
-}
-
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-@keyframes pulse {
-    0%, 100% {
-        box-shadow: 0 0 0 0 rgba(255, 102, 0, 0.4);
-    }
-    50% {
-        box-shadow: 0 0 0 8px rgba(255, 102, 0, 0);
-    }
-}
-
-.container {
-    animation: fadeInUp 0.8s ease-out;
-}
-button:focus,
-.btn:focus,
-a:focus {
-    outline: 2px solid var(--accent-color);
-    outline-offset: 2px;
-}
-
-@media (prefers-reduced-motion: reduce) {
-    *,
-    *::before,
-    *::after {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
-    }
 }
